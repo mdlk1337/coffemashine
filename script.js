@@ -5,11 +5,11 @@ const draggables = document.querySelectorAll('.bill');
 const dropzone = document.getElementById('dropzone');
 const acceptro = document.querySelector('.acceptor-led');
 
-let rect = dropzone.getBoundingClientRect();
-let rectLeft = rect.left;
-let rectRight = rect.right;
-let rectTop = rect.top;
-let rectBottom = rect.bottom;
+const rect = dropzone.getBoundingClientRect();
+const rectLeft = rect.left;
+const rectRight = rect.right;
+const rectTop = rect.top;
+const rectBottom = rect.bottom;
 
 
 
@@ -26,18 +26,18 @@ let selectCoffe = null;
 let balance = 0;
 
 coffeBtns.addEventListener('click', (event) => {
-    let btn = event.target.closest('.coffee-button')
+    let btn = event.target.closest('.coffee-button');
     
     if(!btn) {
         return
     } 
 
 
-    selectCoffe = btn.dataset.name
-    coffePrice = btn.dataset.price
+    selectCoffe = btn.dataset.name;
+    coffePrice = btn.dataset.price;
  
 
-    displayText.textContent = `Вы выбрали кофе ${selectCoffe}, цена ${coffePrice}`
+    displayText.textContent = `Вы выбрали кофе ${selectCoffe}, цена ${coffePrice}`;
 
     if(balance === 0) {
       let paragraph = document.createElement('p')
@@ -80,6 +80,7 @@ coffeBtns.addEventListener('click', (event) => {
                   indecator.classList.remove('active')
                   indecator.style.transition = '1s'
             }, 11000) 
+            
       }
     }
 })
