@@ -39,50 +39,13 @@ coffeBtns.addEventListener('click', (event) => {
 
     displayText.textContent = `Вы выбрали кофе ${selectCoffe}, цена ${coffePrice}`;
 
-    if(balance === 0) {
-      let paragraph = document.createElement('p')
-    paragraph.textContent = "Пожалуйста внесите сумму в купюроприемник"
-    displayText.append(paragraph)
-    }
-    
-
-    if(balance === 0) {
-      return
-    }else {
-      indecator.classList.toggle('active');
-
-      let textCoffeeReady = document.createElement('p');
-      textCoffeeReady.textContent = 'Ваш кофе готовиться, ожидайте'
-      displayText.append(textCoffeeReady)
-      
-
-      if(selectCoffe !== null) {
-        coffeeImg.animate([
-            
-            { opacity: 0 }, 
-            { opacity: 1 }
-            ], 
-            {
-            
-            duration: 11000, 
-            easing: 'ease-in-out'
-            });
-            
-            setTimeout(() => {
-              
-              displayText.textContent = "Ваш кофе готов до свидания"
-                  setTimeout(() => {
-                      displayText.textContent = " "
-                      balance = 0;
-                      coffePrice = null;
-                      selectCoffe = null;
-                  }, 2000)
-                  indecator.classList.remove('active')
-                  indecator.style.transition = '1s'
-            }, 11000) 
-            
-      }
-    }
+    if(balance >=  coffePrice) {
+      	startCoffee()
+    } else {
+		let paragraph = document.createElement('p')
+    	paragraph.textContent = "Пожалуйста внесите сумму в купюроприемник"
+    	displayText.append(paragraph)
+	}
 })
 
 draggables.forEach((money) => {
@@ -125,30 +88,31 @@ draggables.forEach((money) => {
       setTimeout(() => {
         
         balance += Number(curMoney.dataset.value)
+		console.log('Внес деньги', balance)
         displayText.textContent = `Ваш баланс ${balance} €`
         let text = document.createElement('p')
         text.textContent = "Выберите кофе"
         displayText.append(text)
-      }, 2000)
+      }, 1000)
 
       setTimeout(() => {
         acceptro.style.background = '#f1c27d'
       }, 1000)
 
       over.addEventListener('click', () => {
-
-        if(selectCoffe === null) {
-          displayText.textContent = 'Пожалуйста выберите кофе'
-        }
-
-        if(coffePrice === null) {
-          return
-        }
-
-        setTimeout(() => {
-        let order = balance - coffePrice
-        displayText.textContent = `Ваша сдача составляет ${order} €`
+		
+		setTimeout(() => {
+        	displayText.textContent = `Ваша сдача составляет ${balance} €`
+			console.log('Возврат сдачи', balance)
       }, 1000)
+		
+      setTimeout(() => {
+                      displayText.textContent = " "
+                      balance = 0;
+					  console.log('баланс очищен')
+                      coffePrice = null;
+                      selectCoffe = null;
+                  }, 5000)
         
       })
     }
@@ -163,3 +127,38 @@ draggables.forEach((money) => {
   })
 })
 
+
+function startCoffee () {
+	indecator.classList.toggle('active');
+
+     	let textCoffeeReady = document.createElement('p');
+      	textCoffeeReady.textContent = 'Ваш кофе готовиться, ожидайте'
+        displayText.append(textCoffeeReady)
+      
+
+      	if(selectCoffe !== null) {
+        coffeeImg.animate([
+            
+            { opacity: 0 }, 
+            { opacity: 1 }
+            ], 
+            {
+            
+            duration: 11000, 
+            easing: 'ease-in-out'
+            });
+            
+            setTimeout(() => {
+              
+            	displayText.textContent = `Ваш кофе готов, ваш баланс ${balance} €`
+              	let changeText = document.createElement('p')
+            	changeText.textContent = "Пожалуйста нажмите на кнопку чтобы вернуть сдачу"
+				displayText.append(changeText)
+                indecator.classList.remove('active')
+                indecator.style.transition = '1s'
+            }, 11000) 
+
+			balance = balance - coffePrice
+            
+      }
+}
