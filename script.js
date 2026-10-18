@@ -12,7 +12,7 @@ const rectTop = rect.top;
 const rectBottom = rect.bottom;
 
 
-
+let coffeeBtn = document.querySelectorAll('.coffee-button')
 let coffeBtns = document.querySelector('.coffee-buttons');
 let coffeName = document.querySelectorAll('.coffee-name');
 let over = document.querySelector('.over');
@@ -130,6 +130,15 @@ draggables.forEach((money) => {
 
 function startCoffee () {
 	indecator.classList.toggle('active');
+
+	coffeeBtn.forEach(btn => {
+		btn.disabled = true
+
+		setTimeout(() => {
+			btn.disabled = false
+		}, 11000);
+	} )
+	
 
      	let textCoffeeReady = document.createElement('p');
       	textCoffeeReady.textContent = 'Ваш кофе готовиться, ожидайте'

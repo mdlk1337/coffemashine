@@ -376,8 +376,7 @@
       background-repeat: no-repeat;
       background-size: 100% 0%; /* Начальная высота 0% */
       background-position: bottom; /* Заливка снизу вверх */
-      transition: background-size 10s ease;
-      background-color: transparent;
+      transition: background-size 10s;
     }
 
     .indecator.active {
