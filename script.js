@@ -116,11 +116,6 @@ draggables.forEach((money) => {
     document.removeEventListener('mousemove', onMouseMove);
     curMoney.onmouseup = null;
 
-    if(selectCoffe === null) {
-    displayText.textContent = 'Пожалуйста сначала выберите кофе';
-    return
-  }
-
     if(event.pageX > rectLeft && event.pageX < rectRight && event.pageY > rectTop + 50 && event.pageY < rectBottom + 70) {
       curMoney.style.display = 'none'
 
