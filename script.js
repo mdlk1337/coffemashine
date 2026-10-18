@@ -1,31 +1,31 @@
 const displayText = document.querySelector('.display-title');
 
-const draggables = document.querySelectorAll('.bill');
+const bill = document.querySelectorAll('.bill');
 
 const dropzone = document.getElementById('dropzone');
 const acceptro = document.querySelector('.acceptor-led');
 
-const rect = dropzone.getBoundingClientRect();
-const rectLeft = rect.left;
-const rectRight = rect.right;
-const rectTop = rect.top;
-const rectBottom = rect.bottom;
+const dropzoneRect = dropzone.getBoundingClientRect();
+const dropzoneRectLeft = dropzoneRect.left;
+const dropzoneRectRight = dropzoneRect.right;
+const dropzoneRectTop = dropzoneRect.top;
+const dropzoneRectBottom = dropzoneRect.bottom;
 
 
 let coffeeBtn = document.querySelectorAll('.coffee-button')
-let coffeBtns = document.querySelector('.coffee-buttons');
-let coffeName = document.querySelectorAll('.coffee-name');
-let over = document.querySelector('.over');
+let coffeeBtns = document.querySelector('.coffee-buttons');
+let coffeeName = document.querySelectorAll('.coffee-name');
+let change = document.querySelector('.over');
 let indecator = document.querySelector('.indecator');
 let coffeeImg = document.querySelector('.coffee');
 
 
-let coffePrices = document.querySelectorAll('.coffee-price');
-let coffePrice = null;
-let selectCoffe = null;
+let coffeePrices = document.querySelectorAll('.coffee-price');
+let coffeePrice = null;
+let selectCoffee = null;
 let balance = 0;
 
-coffeBtns.addEventListener('click', (event) => {
+coffeeBtns.addEventListener('click', (event) => {
     let btn = event.target.closest('.coffee-button');
     
     if(!btn) {
@@ -33,13 +33,13 @@ coffeBtns.addEventListener('click', (event) => {
     } 
 
 
-    selectCoffe = btn.dataset.name;
-    coffePrice = btn.dataset.price;
+    selectCoffee = btn.dataset.name;
+    coffeePrice = btn.dataset.price;
  
 
-    displayText.textContent = `Вы выбрали кофе ${selectCoffe}, цена ${coffePrice}`;
+    displayText.textContent = `Вы выбрали кофе ${selectCoffee}, цена ${coffeePrice}`;
 
-    if(balance >=  coffePrice) {
+    if(balance >=  coffeePrice) {
       	startCoffee()
     } else {
 		let paragraph = document.createElement('p')
@@ -48,24 +48,24 @@ coffeBtns.addEventListener('click', (event) => {
 	}
 })
 
-draggables.forEach((money) => {
+bill.forEach((money) => {
 
-    money.addEventListener('mouseover', (moneyC) => {
+    money.addEventListener('mouseover', (event) => {
 
-      let curMoney = moneyC.currentTarget;
+      let currentBill = event.currentTarget;
 
 
-      curMoney.onmousedown = (event) => {
+      currentBill.onmousedown = (event) => {
   
-  curMoney.style.position = 'absolute';
-  curMoney.style.zIndex = 1000;
-  curMoney.style.transform = 'rotate(90deg)'
+  currentBill.style.position = 'absolute';
+  currentBill.style.zIndex = 1000;
+  currentBill.style.transform = 'rotate(90deg)'
 
   moveAt(event.pageX, event.pageY);
 
   function moveAt(pageX, pageY) {
-    curMoney.style.left = pageX - curMoney.offsetWidth / 2 + 'px'
-    curMoney.style.top = pageY - curMoney.offsetHeight / 2 + 'px'
+    currentBill.style.left = pageX - currentBill.offsetWidth / 2 + 'px'
+    currentBill.style.top = pageY - currentBill.offsetHeight / 2 + 'px'
   }
 
    function onMouseMove(event) {
@@ -74,20 +74,20 @@ draggables.forEach((money) => {
   
   document.addEventListener('mousemove', onMouseMove);
 
-  curMoney.onmouseup = (event)  => {
+  currentBill.onmouseup = (event)  => {
 
     document.removeEventListener('mousemove', onMouseMove);
-    curMoney.onmouseup = null;
+    currentBill.onmouseup = null;
 
-    if(event.pageX > rectLeft && event.pageX < rectRight && event.pageY > rectTop + 50 && event.pageY < rectBottom + 70) {
-      curMoney.style.display = 'none'
+    if(event.pageX > dropzoneRectLeft && event.pageX < dropzoneRectRight && event.pageY > dropzoneRectTop + 50 && event.pageY < dropzoneRectBottom + 70) {
+      currentBill.style.display = 'none'
 
-      displayText.textContent = `Ваш баланс пополнен на ${curMoney.dataset.value}  €`
+      displayText.textContent = `Ваш баланс пополнен на ${currentBill.dataset.value}  €`
       acceptro.style.background = "green"
 
       setTimeout(() => {
         
-        balance += Number(curMoney.dataset.value)
+        balance += Number(currentBill.dataset.value)
 		console.log('Внес деньги', balance)
         displayText.textContent = `Ваш баланс ${balance} €`
         let text = document.createElement('p')
@@ -99,7 +99,7 @@ draggables.forEach((money) => {
         acceptro.style.background = '#f1c27d'
       }, 1000)
 
-      over.addEventListener('click', () => {
+      change.addEventListener('click', () => {
 		
 		setTimeout(() => {
         	displayText.textContent = `Ваша сдача составляет ${balance} €`
@@ -110,15 +110,15 @@ draggables.forEach((money) => {
                       displayText.textContent = " "
                       balance = 0;
 					  console.log('баланс очищен')
-                      coffePrice = null;
-                      selectCoffe = null;
+                      coffeePrice = null;
+                      selectCoffee = null;
                   }, 5000)
         
       })
     }
   };
 
-  curMoney.ondragstart = function() {
+  currentBill.ondragstart = function() {
   return false;
   };
 
@@ -145,7 +145,7 @@ function startCoffee () {
         displayText.append(textCoffeeReady)
       
 
-      	if(selectCoffe !== null) {
+      	if(selectCoffee !== null) {
         coffeeImg.animate([
             
             { opacity: 0 }, 
@@ -167,7 +167,7 @@ function startCoffee () {
                 indecator.style.transition = '1s'
             }, 11000) 
 
-			balance = balance - coffePrice
+			balance = balance - coffeePrice
             
       }
 }
